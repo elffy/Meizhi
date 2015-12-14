@@ -1,9 +1,28 @@
+/*
+ * Copyright (C) 2015 Drakeet <drakeet.me@gmail.com>
+ *
+ * This file is part of Meizhi
+ *
+ * Meizhi is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Meizhi is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Meizhi.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package me.drakeet.meizhi.ui.base;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import me.drakeet.meizhi.Drakeet;
+import me.drakeet.meizhi.GankApi;
 import me.drakeet.meizhi.DrakeetFactory;
 import me.drakeet.meizhi.R;
 import me.drakeet.meizhi.ui.AboutActivity;
@@ -18,9 +37,10 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class BaseActivity extends AppCompatActivity {
 
-    public static final Drakeet sDrakeet = DrakeetFactory.getSingleton();
+    public static final GankApi sGankIO = DrakeetFactory.getGankIOSingleton();
 
     private CompositeSubscription mCompositeSubscription;
+
 
     public CompositeSubscription getCompositeSubscription() {
         if (this.mCompositeSubscription == null) {
@@ -30,6 +50,7 @@ public class BaseActivity extends AppCompatActivity {
         return this.mCompositeSubscription;
     }
 
+
     public void addSubscription(Subscription s) {
         if (this.mCompositeSubscription == null) {
             this.mCompositeSubscription = new CompositeSubscription();
@@ -37,6 +58,7 @@ public class BaseActivity extends AppCompatActivity {
 
         this.mCompositeSubscription.add(s);
     }
+
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -51,16 +73,17 @@ public class BaseActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     protected void loginGitHub() {
         new Once(this).show(R.string.action_github_login, () -> {
-            ToastUtils.showLongLong(getString(R.string.tip_login_github));
+            ToastUtils.showLongX2(getString(R.string.tip_login_github));
         });
         String url = getString(R.string.url_login_github);
-        Intent intent = new Intent(this, WebActivity.class);
-        intent.putExtra(WebActivity.EXTRA_URL, url);
-        intent.putExtra(WebActivity.EXTRA_TITLE, getString(R.string.action_github_login));
+        Intent intent = WebActivity.newIntent(this, url,
+                getString(R.string.action_github_login));
         startActivity(intent);
     }
+
 
     @Override protected void onDestroy() {
         super.onDestroy();

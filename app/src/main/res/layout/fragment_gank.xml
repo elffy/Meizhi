@@ -1,17 +1,44 @@
+<!--
+  ~ Copyright (C) 2015 Drakeet <drakeet.me@gmail.com>
+  ~
+  ~ This file is part of Meizhi
+  ~
+  ~ Meizhi is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Meizhi is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Meizhi.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="me.drakeet.meizhi.ui.GankFragment">
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/cl_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_gank"
-        tools:context="me.drakeet.meizhi.ui.GankActivity.GankFragment">
+        android:background="@color/bg_gank">
 
-        <me.drakeet.meizhi.widget.GoodAppBarLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_gank"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/gank_header_height"
+            android:paddingBottom="@dimen/gank_footer_padding"
+            android:clipToPadding="false"/>
+
+        <me.henrytao.smoothappbarlayout.SmoothAppBarLayout
             android:id="@+id/header_appbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/gank_header_height">
@@ -35,6 +62,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/theme_primary_darker"
                         android:scaleType="centerCrop"/>
+
                     <ImageView
                         android:layout_width="36dp"
                         android:layout_height="36dp"
@@ -45,13 +73,7 @@
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
-        </me.drakeet.meizhi.widget.GoodAppBarLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_gank"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        </me.henrytao.smoothappbarlayout.SmoothAppBarLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 

@@ -1,3 +1,22 @@
+/*
+ * Copyright (C) 2015 Drakeet <drakeet.me@gmail.com>
+ *
+ * This file is part of Meizhi
+ *
+ * Meizhi is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Meizhi is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Meizhi.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package me.drakeet.meizhi.widget;
 
 import android.content.Context;
@@ -20,19 +39,23 @@ public class LoveVideoView extends WebView {
 
     private final Context mContext;
 
+
     public LoveVideoView(Context context) {
         this(context, null);
     }
 
+
     public LoveVideoView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
+
 
     public LoveVideoView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
         init();
     }
+
 
     void init() {
         setWebViewClient(new LoveClient());
@@ -55,6 +78,7 @@ public class LoveVideoView extends WebView {
         }
     }
 
+
     private class LoveClient extends WebViewClient {
 
         @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -62,19 +86,22 @@ public class LoveVideoView extends WebView {
             return true;
         }
 
-        @Override
-        public void onPageFinished(WebView view, String url) {
+
+        @Override public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             // 这些视频需要hack CSS才能达到全屏播放的效果
             if (url.contains("www.vmovier.com")) {
                 injectCSS("vmovier.css");
-            } else if (url.contains("video.weibo.com")) {
+            }
+            else if (url.contains("video.weibo.com")) {
                 injectCSS("weibo.css");
-            } else if (url.contains("m.miaopai.com")) {
+            }
+            else if (url.contains("m.miaopai.com")) {
                 injectCSS("miaopai.css");
             }
         }
     }
+
 
     // Inject CSS method: read style.css from assets folder
     // Append stylesheet to document head
@@ -98,17 +125,17 @@ public class LoveVideoView extends WebView {
         }
     }
 
-    private class Chrome extends WebChromeClient implements MediaPlayer.OnCompletionListener {
 
-        @Override public void onCompletion(MediaPlayer mp) {
-            if(mp!=null) {
-                if(mp.isPlaying())
-                    mp.stop();
-                mp.reset();
-                mp.release();
-                mp=null;
+    private class Chrome extends WebChromeClient
+            implements MediaPlayer.OnCompletionListener {
+
+        @Override public void onCompletion(MediaPlayer player) {
+            if (player != null) {
+                if (player.isPlaying()) player.stop();
+                player.reset();
+                player.release();
+                player = null;
             }
         }
     }
-
 }
